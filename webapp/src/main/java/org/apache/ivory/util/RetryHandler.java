@@ -65,9 +65,17 @@ public class RetryHandler {
 
 				workflowEngine.reRun(processObj.getCluster().getName(), wfId,
 						null);
+			} else {
+				LOG.warn("All retry attempt failed out of configured: "
+						+ attempts + " attempt for process instance::"
+						+ processName + ":" + nominalTime + " And WorkflowId: "
+						+ wfId);
+
+				GenericAlert.alertWFfailed(processName, nominalTime);
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			GenericAlert.alertRetryFailed(processName, nominalTime,
+					Integer.parseInt(runId), e.getMessage());
 			throw new IvoryException(e);
 		}
 	}
