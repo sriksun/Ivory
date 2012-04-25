@@ -220,4 +220,13 @@ public class ProcessEntityParserTest extends AbstractTestBase{
 		process.getInputs().getInput().get(0).setStartInstance("today(-48,0)");
 		parser.validate(process);
 	}
+	
+	@Test
+	public void testOozieLatestEL() throws Exception {
+		Process process = parser
+				.parseAndValidate((ProcessEntityParserTest.class
+						.getResourceAsStream(PROCESS_XML)));
+		process.getInputs().getInput().get(0).setStartInstance("latest(0)");
+		parser.validate(process);
+	}
 }
