@@ -201,6 +201,8 @@ public class OozieProcessMapper extends AbstractOozieEntityMapper<Process> {
         String libDir = getLibDirectory(process.getWorkflow().getPath(), cluster);
         if (libDir != null)
             props.put(OozieClient.LIBPATH, libDir);
+        
+        props.put("userWorkflowPath", process.getWorkflow().getPath());
 
         // create parent wf
         createWorkflow(cluster, DEFAULT_WF_TEMPLATE, coordName, coordPath);
@@ -347,6 +349,8 @@ public class OozieProcessMapper extends AbstractOozieEntityMapper<Process> {
         String libDir = getLibDirectory(process.getWorkflow().getPath(), cluster);
         if (libDir != null)
             props.put(OozieClient.LIBPATH, libDir);
+        
+        props.put("userWorkflowPath", process.getWorkflow().getPath());
 
         // create parent wf
         createWorkflow(cluster, LATE_WF_TEMPLATE, coordName, coordPath);
