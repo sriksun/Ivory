@@ -352,7 +352,7 @@ public class EntityManager {
             Entity entityObj = getEntity(entity, type);
             Set<Entity> dependents = EntityGraph.get().getDependents(entityObj);
             Entity[] entities = dependents.toArray(new Entity[dependents.size()]);
-            return new EntityList(entities);
+            return new EntityList(entities==null?new Entity[]{}:entities);
         } catch (Exception e) {
             LOG.error("Unable to get dependencies for entity " + entity + "(" + type + ")", e);
             throw IvoryWebException.newException(e, Response.Status.BAD_REQUEST);
