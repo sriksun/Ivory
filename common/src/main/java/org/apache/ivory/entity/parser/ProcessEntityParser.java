@@ -85,8 +85,11 @@ public class ProcessEntityParser extends EntityParser<Process> {
                 // TODO currently retention supports deletion of past instances
                 // only
                 // hence checking for only startinstance of input
-                CrossEntityValidations.validateFeedRetentionPeriod(input.getStartInstance(), feed, clusterName);
-                CrossEntityValidations.validateInstanceRange(process, input, feed);
+                if(!input.getStartInstance().contains("latest")){
+                    CrossEntityValidations.validateFeedRetentionPeriod(input.getStartInstance(), feed, clusterName);
+                    CrossEntityValidations.validateInstanceRange(process, input, feed);
+                }
+
                 if (input.getPartition() != null) {
                     CrossEntityValidations.validateInputPartition(input, feed);
                 }
