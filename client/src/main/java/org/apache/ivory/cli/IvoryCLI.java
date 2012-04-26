@@ -440,7 +440,11 @@ public class IvoryCLI {
 			try {
 				InputStream input = IvoryCLI.class
 <<<<<<< HEAD
+<<<<<<< HEAD
 						.getResourceAsStream("/IvoryURL.properties");
+=======
+						.getResourceAsStream("IvoryURL.properties");
+>>>>>>> 4cddf23... Made changes to get Ivory URL from properties file.
 =======
 						.getResourceAsStream("IvoryURL.properties");
 >>>>>>> 4cddf23... Made changes to get Ivory URL from properties file.
