@@ -227,9 +227,13 @@ public class EntityManager {
     private void canRemove(Entity entity) throws IvoryException {
         Pair<String, EntityType>[] referencedBy = EntityIntegrityChecker.referencedBy(entity);
         if (referencedBy != null && referencedBy.length > 0) {
-            throw new IvoryException(entity.getName() + "(" + entity.getEntityType() + ") cant " + "be removed as it is referred by "
-                    + referencedBy);
-        }
+            StringBuffer messages= new StringBuffer();
+            for(Pair<String, EntityType> ref: referencedBy){
+            messages.append(ref).append("\n");
+            }
+               throw new IvoryException(entity.getName() + "(" + entity.getEntityType() + ") cant " + "be removed as it is referred by "
+                       + messages);
+           }
     }
 
     protected Entity submitInternal(HttpServletRequest request, String type) throws IOException, IvoryException {
