@@ -439,17 +439,9 @@ public class IvoryCLI {
 		if (url == null) {
 			try {
 				InputStream input = IvoryCLI.class
-<<<<<<< HEAD
-<<<<<<< HEAD
 						.getResourceAsStream("/IvoryURL.properties");
-=======
-						.getResourceAsStream("IvoryURL.properties");
->>>>>>> 4cddf23... Made changes to get Ivory URL from properties file.
-=======
-						.getResourceAsStream("IvoryURL.properties");
->>>>>>> 4cddf23... Made changes to get Ivory URL from properties file.
 				BufferedReader br = new BufferedReader(new InputStreamReader(
-						new DataInputStream(input)));
+				new DataInputStream(input)));
 				String brline;
 				brline = br.readLine();
 				url = brline.substring(brline.indexOf('=') + 1).trim();
