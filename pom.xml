@@ -16,31 +16,30 @@
    limitations under the License.
  -->
 <project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.ivory</groupId>
-  <artifactId>ivory-main</artifactId>
-  <version>0.1</version>
-  <description>Data Management and Feed Processing Platform over Hadoop</description>
-  <name>Ivory</name>
-  <packaging>pom</packaging>
-  <url>https://github.com/sriksun/Ivory</url>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.apache.ivory</groupId>
+    <artifactId>ivory-main</artifactId>
+    <version>0.2-SNAPSHOT</version>
+    <description>Data Management and Feed Processing Platform over Hadoop</description>
+    <name>Ivory</name>
+    <packaging>pom</packaging>
+    <url>https://github.com/sriksun/Ivory</url>
 
-  <modules>
-    <module>client</module>
-    <module>common</module>
-    <module>test-util</module>
-    <module>feed</module>
-    <module>messaging</module>
-    <module>process</module>
-    <module>oozie</module>
-    <module>acquisition</module>
-    <module>replication</module>
-    <module>retention</module>
-    <module>archival</module>
-    <module>metrics</module>
-    <module>logging</module>
-    <module>webapp</module>
-  </modules>
+    <modules>
+        <module>client</module>
+        <module>common</module>
+        <module>test-util</module>
+        <module>feed</module>
+        <module>messaging</module>
+        <module>process</module>
+        <module>oozie</module>
+        <module>acquisition</module>
+        <module>replication</module>
+        <module>retention</module>
+        <module>archival</module>
+        <module>metrics</module>
+        <module>webapp</module>
+    </modules>
 
     <scm>
         <connection>scm:git:git://github.com/sriksun/Ivory.git</connection>
