@@ -54,7 +54,7 @@
         <repository>
             <id>InMobiRepository</id>
             <name>InMobi Internal Repository</name>
-            <url>http://build.corp.inmobi.com/nexus/content/repositories/snapshots</url>
+            <url>http://build.corp.inmobi.com/nexus/content/repositories/releases</url>
         </repository>
     </distributionManagement>
 
