@@ -32,8 +32,11 @@ public class RerunEventFactory<T extends RerunEvent> {
 	}
 
 	private T lateEventFromString(WorkflowEngine wfEngine, String line) {
-		// TODO Auto-generated method stub
-		return null;
+		String[] items = line.split("\\" + RerunEvent.SEP);
+		T event = (T) new LaterunEvent(wfEngine, items[0], items[1],
+				Long.parseLong(items[2]), Long.parseLong(items[3]), items[4],
+				items[5], Integer.parseInt(items[6]));
+		return event;
 	}
 
 	public T retryEventFromString(WorkflowEngine workflowEngine, String message) {

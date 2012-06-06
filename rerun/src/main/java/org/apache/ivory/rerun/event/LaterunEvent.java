@@ -27,5 +27,14 @@ public class LaterunEvent extends RerunEvent{
 		super(wfEngine, clusterName, wfId, msgInsertTime, delay, processName,
 				processInstance, runId);
 	}
+	
+	@Override
+	public String toString() {
+		return clusterName + SEP + wfId + SEP + msgInsertTime + SEP
+				+ delayInMilliSec + SEP + processName + SEP + processInstance
+				+ SEP + runId ;
+	}
+
+
 
 }
