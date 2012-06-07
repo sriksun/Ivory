@@ -815,7 +815,7 @@ public class OozieWorkflowEngine implements WorkflowEngine {
     @Override
 	public String getWorkflowProperty(String cluster, String jobId,
 			String property) throws IvoryException {
-		OozieClient client = new CustomOozieClient(cluster);
+		OozieClient client = OozieClientFactory.get(cluster);
 		try {
 			WorkflowJob jobInfo = client.getJobInfo(jobId);
 			String conf = jobInfo.getConf();
