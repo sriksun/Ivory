@@ -1,0 +1,204 @@
+Index: feed/src/main/resources/config/workflow/replication-workflow.xml
+===================================================================
+--- feed/src/main/resources/config/workflow/replication-workflow.xml	(revision d3902f583a7085febb7040d120120a70be13cc98)
++++ feed/src/main/resources/config/workflow/replication-workflow.xml	(revision )
+@@ -31,10 +31,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -47,7 +43,6 @@
+ 			<arg>-out</arg><arg>${logDir}/latedata/${nominalTime}/${srcClusterName}</arg>
+ 			<arg>-paths</arg><arg>${ivoryInPaths}</arg>
+ 			<arg>-ivoryInputFeeds</arg><arg>${ivoryInputFeeds}</arg>
+-			<file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 			<capture-output />
+ 		</java>
+ 		<ok to="replication" />
+@@ -58,11 +53,7 @@
+             <job-tracker>${jobTracker}</job-tracker>
+             <name-node>${nameNode}</name-node>
+             <configuration>
+-            	<property>
++				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -81,7 +72,6 @@
+ 			<arg>-sourcePaths</arg><arg>${distcpSourcePaths}</arg>
+ 			<arg>-targetPath</arg><arg>${distcpTargetPaths}</arg>
+             <file>${wf:conf("ivory.libpath")}/hadoop-distcp.jar</file>
+-            <file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+         </java>
+         <ok to="succeeded-post-processing"/>
+         <error to="failed-post-processing"/>
+@@ -92,10 +82,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -132,7 +118,6 @@
+             <file>${wf:conf("ivory.libpath")}/json-simple.jar</file>
+             <file>${wf:conf("ivory.libpath")}/oozie-client.jar</file>
+             <file>${wf:conf("ivory.libpath")}/spring-jms.jar</file>
+-            <file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 		</java>
+ 		<ok to="end" />
+ 		<error to="fail" />
+@@ -143,10 +128,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -183,7 +164,6 @@
+             <file>${wf:conf("ivory.libpath")}/json-simple.jar</file>
+             <file>${wf:conf("ivory.libpath")}/oozie-client.jar</file>
+             <file>${wf:conf("ivory.libpath")}/spring-jms.jar</file>
+-            <file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 		</java>
+ 		<ok to="fail" />
+ 		<error to="fail" />
+Index: process/src/main/resources/config/workflow/process-parent-workflow.xml
+===================================================================
+--- process/src/main/resources/config/workflow/process-parent-workflow.xml	(revision d3902f583a7085febb7040d120120a70be13cc98)
++++ process/src/main/resources/config/workflow/process-parent-workflow.xml	(revision )
+@@ -31,10 +31,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -47,7 +43,6 @@
+ 			<arg>-out</arg><arg>${logDir}/latedata/${nominalTime}</arg>
+ 			<arg>-paths</arg><arg>${ivoryInPaths}</arg>
+ 			<arg>-ivoryInputFeeds</arg><arg>${ivoryInputFeeds}</arg>
+-			<file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 			<capture-output />
+ 		</java>
+ 		<ok to="user-workflow" />
+@@ -69,10 +64,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -109,7 +100,6 @@
+             <file>${wf:conf("ivory.libpath")}/json-simple.jar</file>
+             <file>${wf:conf("ivory.libpath")}/oozie-client.jar</file>
+             <file>${wf:conf("ivory.libpath")}/spring-jms.jar</file>
+-            <file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 		</java>
+ 		<ok to="end" />
+ 		<error to="fail" />
+@@ -120,10 +110,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -160,7 +146,6 @@
+             <file>${wf:conf("ivory.libpath")}/json-simple.jar</file>
+             <file>${wf:conf("ivory.libpath")}/oozie-client.jar</file>
+             <file>${wf:conf("ivory.libpath")}/spring-jms.jar</file>
+-            <file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 		</java>
+ 		<ok to="fail" />
+ 		<error to="fail" />
+Index: feed/src/main/resources/config/workflow/retention-workflow.xml
+===================================================================
+--- feed/src/main/resources/config/workflow/retention-workflow.xml	(revision d3902f583a7085febb7040d120120a70be13cc98)
++++ feed/src/main/resources/config/workflow/retention-workflow.xml	(revision )
+@@ -22,11 +22,7 @@
+             <job-tracker>${jobTracker}</job-tracker>
+             <name-node>${nameNode}</name-node>
+             <configuration>
+-            	<property>
++				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -42,7 +38,6 @@
+             <arg>-timeZone</arg><arg>${timeZone}</arg>
+             <arg>-frequency</arg><arg>${frequency}</arg>
+ 			<arg>-logFile</arg><arg>${logDir}/instancePaths-${nominalTime}.csv</arg>
+-			<file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+         </java>
+         <ok to="jms-messaging"/>
+         <error to="fail"/>
+@@ -54,10 +49,6 @@
+ 			<name-node>${nameNode}</name-node>
+ 			<configuration>
+ 				<property>
+-					<name>fs.s4.impl</name>
+-					<value>com.inmobi.grid.fs.s4fs.NativeS4FileSystem</value>
+-				</property>
+-				<property>
+ 					<name>mapred.job.queue.name</name>
+ 					<value>${queueName}</value>
+ 				</property>
+@@ -90,7 +81,6 @@
+             <file>${wf:conf("ivory.libpath")}/json-simple.jar</file>
+             <file>${wf:conf("ivory.libpath")}/oozie-client.jar</file>
+             <file>${wf:conf("ivory.libpath")}/spring-jms.jar</file>
+-            <file>${wf:conf("ivory.libpath")}/s4fs-0.1.jar</file>
+ 		</java>
+ 		<ok to="end" />
+ 		<error to="fail" />
+Index: pom.xml
+===================================================================
+--- pom.xml	(date 1361372749000)
++++ pom.xml	(revision )
+@@ -180,12 +180,6 @@
+             </dependency>
+ 
+             <dependency>
+-                <groupId>com.inmobi.grid</groupId>
+-                <artifactId>s4fs</artifactId>
+-                <version>0.1</version>
+-            </dependency>
+-
+-            <dependency>
+                 <groupId>log4j</groupId>
+                 <artifactId>log4j</artifactId>
+                 <version>1.2.15</version>
