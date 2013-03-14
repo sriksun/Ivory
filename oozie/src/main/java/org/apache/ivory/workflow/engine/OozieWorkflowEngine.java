@@ -103,10 +103,15 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
 		Map<String, BundleJob> bundleMap = findLatestBundle(entity);
 		List<String> schedClusters = new ArrayList<String>();
 		for (String cluster : bundleMap.keySet()) {
-			if (bundleMap.get(cluster) == MISSING)
+            BundleJob bundleJob = bundleMap.get(cluster);
+            if (bundleJob == MISSING || bundleJob.getStatus().equals(Job.Status.KILLED)) {
+                if (bundleJob.getStatus().equals(Job.Status.KILLED)) {
+                    LOG.warn("Bundle id: " + bundleJob.getId() + " is in killed state, so allowing schedule");
+                }
 				schedClusters.add(cluster);
-			else 
+            } else {
 			    LOG.debug("The entity " + entity.getName() + " is already scheduled on cluster " + cluster);
+            }
 		}
 
 		if (!schedClusters.isEmpty()) {
@@ -184,7 +189,7 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
 							+ EntityUtil.getWorkflowName(entity) + ";", 0, 256);
 			if (jobs != null) {
 			    List<BundleJob> filteredJobs = new ArrayList<BundleJob>();
-			    for(BundleJob job:jobs)
+			    for(BundleJob job : jobs)
 			        if(job.getStatus() != Job.Status.KILLED || job.getEndTime() == null)
 			            filteredJobs.add(job);
 				return filteredJobs;
