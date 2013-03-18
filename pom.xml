@@ -33,6 +33,7 @@
         <activemq.version>5.4.3</activemq.version>
         <hadoop-distcp.version>0.3</hadoop-distcp.version>
         <jetty.version>6.1.26</jetty.version>
+	<internal.repo>internal.repo</internal.repo>
         <internal.maven.repo>file:///tmp/ivorytemprepo</internal.maven.repo>
     </properties>
 
@@ -85,7 +86,7 @@
 
     <distributionManagement>
       <repository>
-        <id>internal.repo</id>
+        <id>${internal.repo}</id>
         <name>Internal Repository</name>
         <url>${internal.maven.repo}</url>
       </repository>
