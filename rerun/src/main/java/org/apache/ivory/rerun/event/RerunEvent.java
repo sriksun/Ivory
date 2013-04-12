@@ -17,6 +17,7 @@
  */
 package org.apache.ivory.rerun.event;
 
+import java.util.Date;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
@@ -78,20 +79,11 @@ public class RerunEvent implements Delayed {
 		return entityType;
 	}
 
-	@Override
+    @Override
 	public int compareTo(Delayed o) {
-		int ret = 0;
 		RerunEvent event = (RerunEvent) o;
-
-		if (this.delayInMilliSec < event.delayInMilliSec)
-			ret = -1;
-		else if (this.delayInMilliSec > event.delayInMilliSec)
-			ret = 1;
-		else if (this.msgInsertTime == event.msgInsertTime)
-			ret = 0;
-
-		return ret;
-
+        return new Date(msgInsertTime + delayInMilliSec).
+                compareTo(new Date(event.msgInsertTime + event.delayInMilliSec));
 	}
 
 	@Override
