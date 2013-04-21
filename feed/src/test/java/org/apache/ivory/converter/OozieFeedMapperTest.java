@@ -38,6 +38,7 @@ import org.apache.ivory.entity.v0.cluster.Cluster;
 import org.apache.ivory.entity.v0.cluster.Interfacetype;
 import org.apache.ivory.entity.v0.feed.Feed;
 import org.apache.ivory.oozie.coordinator.COORDINATORAPP;
+import org.apache.ivory.oozie.coordinator.INPUTEVENTS;
 import org.apache.ivory.oozie.coordinator.SYNCDATASET;
 import org.apache.ivory.oozie.coordinator.CONFIGURATION.Property;
 import org.testng.annotations.AfterClass;
@@ -133,6 +134,17 @@ public class OozieFeedMapperTest {
 				"${nameNode}"
 						+ "/examples/input-data/rawLogs/${YEAR}/${MONTH}/${DAY}/${HOUR}/${MINUTE}",
 				outputDataset.getUriTemplate());
+		
+		String inEventName =coord.getInputEvents().getDataIn().get(0).getName();
+		String inEventDataset =coord.getInputEvents().getDataIn().get(0).getDataset();
+		String inEventInstance = coord.getInputEvents().getDataIn().get(0).getInstance().get(0);
+		Assert.assertEquals("input", inEventName);
+		Assert.assertEquals("input-dataset", inEventDataset);
+		Assert.assertEquals("${coord:current(0)}", inEventInstance);
+		
+		String outEventInstance = coord.getOutputEvents().getDataOut().get(0).getInstance();
+		Assert.assertEquals("${coord:current(0)}", outEventInstance);
+		
         for(Property prop:coord.getAction().getWorkflow().getConfiguration().getProperty()){
         	if(prop.getName().equals("mapred.job.priority")){
         		assertEquals(prop.getValue(), "NORMAL");
