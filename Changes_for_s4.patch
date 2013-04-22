@@ -202,3 +202,19 @@ Index: pom.xml
                  <groupId>log4j</groupId>
                  <artifactId>log4j</artifactId>
                  <version>1.2.15</version>
+diff --git a/webapp/pom.xml b/webapp/pom.xml
+index 5eedf82..cc4c9d3 100644
+--- a/webapp/pom.xml
++++ b/webapp/pom.xml
+@@ -133,6 +133,11 @@
+             <groupId>org.testng</groupId>
+             <artifactId>testng</artifactId>
+         </dependency>
++
++        <dependency>
++            <groupId>com.inmobi.grid</groupId>
++            <artifactId>s4fs</artifactId>
++        </dependency>
+     </dependencies>
+ 
+     <build>

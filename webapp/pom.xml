@@ -133,6 +133,11 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.inmobi.grid</groupId>
+            <artifactId>s4fs</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
