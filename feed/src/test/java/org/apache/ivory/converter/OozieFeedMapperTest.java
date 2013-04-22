@@ -133,10 +133,10 @@ public class OozieFeedMapperTest {
 		String inEventInstance = coord.getInputEvents().getDataIn().get(0).getInstance().get(0);
 		Assert.assertEquals("input", inEventName);
 		Assert.assertEquals("input-dataset", inEventDataset);
-		Assert.assertEquals("${coord:current(0)}", inEventInstance);
+		Assert.assertEquals("${now(0,-40)}", inEventInstance);
 		
 		String outEventInstance = coord.getOutputEvents().getDataOut().get(0).getInstance();
-		Assert.assertEquals("${coord:current(0)}", outEventInstance);
+		Assert.assertEquals("${now(0,-40)}", outEventInstance);
 		
         for(Property prop:coord.getAction().getWorkflow().getConfiguration().getProperty()){
         	if(prop.getName().equals("mapred.job.priority")){

@@ -35,6 +35,7 @@ import org.apache.ivory.entity.EntityUtil;
 import org.apache.ivory.entity.FeedHelper;
 import org.apache.ivory.entity.store.ConfigurationStore;
 import org.apache.ivory.entity.v0.EntityType;
+import org.apache.ivory.entity.v0.Frequency;
 import org.apache.ivory.entity.v0.Frequency.TimeUnit;
 import org.apache.ivory.entity.v0.SchemaHelper;
 import org.apache.ivory.entity.v0.cluster.Cluster;
@@ -63,6 +64,8 @@ public class OozieFeedMapper extends AbstractOozieEntityMapper<Feed> {
     private static final String REPLICATION_WF_TEMPLATE = "/config/workflow/replication-workflow.xml";
     
     private static final String FEED_PATH_SEP="#";
+	private static final String TIMEOUT = "timeout";
+	private static final String PARALLEL = "parallel";
 
     public OozieFeedMapper(Feed feed) {
         super(feed);
@@ -189,10 +192,45 @@ public class OozieFeedMapper extends AbstractOozieEntityMapper<Feed> {
 
             long frequency_ms = ExpressionHelper.get().
                     evaluate(feed.getFrequency().toString(), Long.class);
-            long timeout_ms = frequency_ms * 6;
+            long timeout_ms = frequency_ms * 6;            
+            Map<String,String> props = getEntityProperties();
+            String timeout = props.get(TIMEOUT);
+            if(timeout!=null){
+            	try{
+            		timeout_ms= ExpressionHelper.get().
+            				evaluate(timeout, Long.class);
+            	}catch (Exception ignore) {
+            		LOG.error("Unable to evaluate timeout:", ignore);
+            	}
+            }
             if (timeout_ms < THIRTY_MINUTES) timeout_ms = THIRTY_MINUTES;
+            
+            String parallelProp = props.get(PARALLEL);
+			int parallel = 1;
+			if (parallelProp != null) {
+				try {
+					parallel = Integer.parseInt(parallelProp);
+				} catch (NumberFormatException ignore) {
+					LOG.error("Unable to parse parallel:", ignore);
+				}
+			}
+			
             replicationCoord.getControls().setTimeout(String.valueOf(timeout_ms / (1000 * 60)));
             replicationCoord.getControls().setThrottle(String.valueOf(timeout_ms / frequency_ms * 2));
+            replicationCoord.getControls().setConcurrency(String.valueOf(parallel));
+            
+			Frequency replicationDelay = FeedHelper.getCluster(feed,
+					srcCluster.getName()).getDelay();
+			if (replicationDelay != null) {
+				long delay_ms = ExpressionHelper.get().evaluate(
+						replicationDelay.toString(), Long.class);
+				long delay_mins = -1 * delay_ms / (1000 * 60);
+				String elExp = "${now(0," + delay_mins + ")}";
+				replicationCoord.getInputEvents().getDataIn().get(0)
+						.getInstance().set(0, elExp);
+				replicationCoord.getOutputEvents().getDataOut().get(0)
+						.setInstance(elExp);
+			}
 
             Date srcStartDate = FeedHelper.getCluster(feed, srcCluster.getName()).getValidity().getStart();
             Date srcEndDate = FeedHelper.getCluster(feed, srcCluster.getName()).getValidity().getEnd();
