@@ -221,8 +221,9 @@ public class OozieFeedMapper extends AbstractOozieEntityMapper<Feed> {
             
 			Frequency replicationDelay = FeedHelper.getCluster(feed,
 					srcCluster.getName()).getDelay();
+			long delay_ms=0;
 			if (replicationDelay != null) {
-				long delay_ms = ExpressionHelper.get().evaluate(
+				delay_ms = ExpressionHelper.get().evaluate(
 						replicationDelay.toString(), Long.class);
 				long delay_mins = -1 * delay_ms / (1000 * 60);
 				String elExp = "${now(0," + delay_mins + ")}";
@@ -233,8 +234,10 @@ public class OozieFeedMapper extends AbstractOozieEntityMapper<Feed> {
 			}
 
             Date srcStartDate = FeedHelper.getCluster(feed, srcCluster.getName()).getValidity().getStart();
+            srcStartDate=new Date(srcStartDate.getTime()+delay_ms);
             Date srcEndDate = FeedHelper.getCluster(feed, srcCluster.getName()).getValidity().getEnd();
             Date trgStartDate = FeedHelper.getCluster(feed, trgCluster.getName()).getValidity().getStart();
+            trgStartDate=new Date(trgStartDate.getTime()+delay_ms);
             Date trgEndDate = FeedHelper.getCluster(feed, trgCluster.getName()).getValidity().getEnd();
 			if (srcStartDate.after(trgEndDate)
 					|| trgStartDate.after(srcEndDate)) {

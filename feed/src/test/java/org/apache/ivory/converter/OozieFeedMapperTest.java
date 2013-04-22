@@ -101,7 +101,7 @@ public class OozieFeedMapperTest {
 		List<COORDINATORAPP> coords = feedMapper.getCoordinators(trgCluster,
 				new Path("/projects/ivory/"));
 		COORDINATORAPP coord = coords.get(0);
-
+		Assert.assertEquals("2010-01-01T00:40Z", coord.getStart());		
 		Assert.assertEquals("${nameNode}/projects/ivory/REPLICATION", coord
 				.getAction().getWorkflow().getAppPath());
 		Assert.assertEquals("IVORY_FEED_REPLICATION_" + feed.getName() + "_"
@@ -133,7 +133,7 @@ public class OozieFeedMapperTest {
 		Assert.assertEquals("input", inEventName);
 		Assert.assertEquals("input-dataset", inEventDataset);
 		Assert.assertEquals("${now(0,-40)}", inEventInstance);
-		
+
 		String outEventInstance = coord.getOutputEvents().getDataOut().get(0).getInstance();
 		Assert.assertEquals("${now(0,-40)}", outEventInstance);
 		
