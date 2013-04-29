@@ -139,8 +139,12 @@ public class FeedReplicator extends Configured implements Tool {
 				trgPath));
         distcpOptions.setSyncFolder(true);
 		distcpOptions.setBlocking(true);
-		distcpOptions
-				.setMaxMaps(Integer.valueOf(cmd.getOptionValue("maxMaps")));
+		distcpOptions.setMaxMaps(Integer.valueOf(cmd.getOptionValue("maxMaps")));
+        if (cmd.hasOption("bandwidth")) {
+		    distcpOptions.setMapBandwidth(Integer.valueOf(cmd.getOptionValue("bandwidth")));
+        } else if (cmd.hasOption("bandwidthKB")) {
+            distcpOptions.setMapBandwidthKB(Integer.valueOf(cmd.getOptionValue("bandwidthKB")));
+        }
 
 		return distcpOptions;
 	}
