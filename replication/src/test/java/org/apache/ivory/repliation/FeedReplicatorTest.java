@@ -39,7 +39,7 @@ public class FeedReplicatorTest {
         FeedReplicator replicator = new FeedReplicator();
         DistCpOptions options = replicator.getDistCpOptions(new String[] { "true", "-maxMaps", "5", "-sourcePaths",
                 "hdfs://localhost:8020/tmp/", "-targetPath",
-                "hdfs://localhost1:8020/tmp/" });
+                "hdfs://localhost1:8020/tmp/","-bandwidth","1" });
 
         List<Path> srcPaths = new ArrayList<Path>();
         srcPaths.add(new Path("hdfs://localhost:8020/tmp/"));

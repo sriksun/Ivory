@@ -34,6 +34,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter;
 import org.apache.hadoop.tools.DistCp;
+import org.apache.hadoop.tools.DistCpOptionSwitch;
 import org.apache.hadoop.tools.DistCpOptions;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
@@ -128,6 +129,12 @@ public class FeedReplicator extends Configured implements Tool {
 
         opt = new Option("targetPath", true, "target path");
 		opt.setRequired(true);
+		options.addOption(opt);
+
+		opt = DistCpOptionSwitch.BANDWIDTH.getOption();
+		options.addOption(opt);
+
+		opt = DistCpOptionSwitch.BANDWIDTH_KB.getOption();
 		options.addOption(opt);
 
 		CommandLine cmd = new GnuParser().parse(options, args);
