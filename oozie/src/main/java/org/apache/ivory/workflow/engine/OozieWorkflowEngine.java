@@ -53,7 +53,7 @@ import org.apache.ivory.workflow.WorkflowBuilder;
 import org.apache.log4j.Logger;
 import org.apache.oozie.client.*;
 import org.apache.oozie.client.CoordinatorJob.Timeunit;
-import org.apache.oozie.client.WorkflowJob.Status;
+import org.apache.oozie.client.Job.Status;
 
 /**
  * Workflow engine which uses oozies APIs
@@ -835,7 +835,7 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
             cal.setTime(coord.getLastActionTime());
             Frequency freq = createFrequency(coord.getFrequency(),
                     coord.getTimeUnit());
-            cal.add(freq.getTimeUnit().getCalendarUnit(), -1);
+            cal.add(freq.getTimeUnit().getCalendarUnit(), -freq.getFrequency());
             return cal.getTime();
         }
         return null;
@@ -894,6 +894,7 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
     }
 
     private void resume(String cluster, BundleJob bundle) throws IvoryException {
+        bundle = getBundleInfo(cluster, bundle.getId());
         for (CoordinatorJob coord : bundle.getCoordinators()) {
             resume(cluster, coord.getId());
         }
@@ -1007,7 +1008,7 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
             jobprops.remove(OozieClient.COORDINATOR_APP_PATH);
             jobprops.remove(OozieClient.BUNDLE_APP_PATH);
             client.reRun(jobId, jobprops);
-            assertStatus(cluster, jobId, WorkflowJob.Status.RUNNING);
+            assertStatus(cluster, jobId, Job.Status.RUNNING);
             LOG.info("Rerun job " + jobId + " on cluster " + cluster);
         } catch (Exception e) {
             LOG.error("Unable to rerun workflows", e);
@@ -1093,7 +1094,7 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
         OozieClient client = OozieClientFactory.get(cluster);
         try {
             client.suspend(jobId);
-            assertStatus(cluster, jobId, Status.SUSPENDED, Status.SUCCEEDED,
+            assertStatus(cluster, jobId, Status.PREPSUSPENDED, Status.SUSPENDED, Status.SUCCEEDED,
                     Status.FAILED, Status.KILLED);
             LOG.info("Suspended job " + jobId + " on cluster " + cluster);
         } catch (OozieClientException e) {
@@ -1213,7 +1214,7 @@ public class OozieWorkflowEngine extends AbstractWorkflowEngine {
         try {
             WorkflowJob jobInfo = client.getJobInfo(jobId);
             instance.startTime = jobInfo.getStartTime();
-            if (jobInfo.getStatus() == Status.RUNNING) {
+            if (jobInfo.getStatus().name().equals(Status.RUNNING.name())) {
                 instance.endTime = new Date();
             } else {
                 instance.endTime = jobInfo.getEndTime();
